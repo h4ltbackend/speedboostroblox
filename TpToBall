@@ -1,0 +1,22 @@
+local UserInputService = game:GetService("UserInputService")
+local Players = game:GetService("Players")
+local Workspace = game:GetService("Workspace")
+
+local player = Players.LocalPlayer
+
+-- Fonction déclenchée quand on appuie sur une touche
+local function onKeyPress(input, gameProcessed)
+    if gameProcessed then return end
+    if input.KeyCode == Enum.KeyCode.C then
+        local character = player.Character or player.CharacterAdded:Wait()
+        local rootPart = character:FindFirstChild("HumanoidRootPart")
+        local ball = Workspace:FindFirstChild("BallsInPlay") and Workspace.BallsInPlay:FindFirstChild("Ball")
+
+        if rootPart and ball then
+            -- Téléportation du joueur à la balle
+            rootPart.CFrame = ball.CFrame + Vector3.new(0, 5, 0) -- on le place un peu au-dessus de la balle
+        end
+    end
+end
+
+UserInputService.InputBegan:Connect(onKeyPress)
