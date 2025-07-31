@@ -1,0 +1,36 @@
+local UserInputService = game:GetService("UserInputService")
+local Players = game:GetService("Players")
+
+local player = Players.LocalPlayer
+
+local function scoreTeleport()
+    local character = player.Character or player.CharacterAdded:Wait()
+    local rootPart = character:FindFirstChild("HumanoidRootPart")
+    local team = player.Team
+
+    if not rootPart then return end
+
+    if team.Name == "Red" then
+        rootPart.CFrame = CFrame.new(
+            65.9719925, 1.24763751, 112.035172,
+            0.0579666868, 1.79155872e-08, 0.998318493,
+           -1.18382438e-07, 1, -1.10719665e-08,
+           -0.998318493, -1.17541575e-07, 0.0579666868
+        )
+    elseif team.Name == "Blue" then
+        rootPart.CFrame = CFrame.new(
+            71.2727356, 1.23619747, -187.518692,
+            0.914918005, 0, 0.403639764,
+            0, 1, 0,
+           -0.403639764, 0, 0.914918005
+        )
+    end
+end
+
+-- Détection de la touche H
+UserInputService.InputBegan:Connect(function(input, gameProcessed)
+    if gameProcessed then return end
+    if input.KeyCode == Enum.KeyCode.H then
+        scoreTeleport()
+    end
+end)
