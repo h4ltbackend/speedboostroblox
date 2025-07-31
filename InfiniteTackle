@@ -1,0 +1,18 @@
+local UserInputService = game:GetService("UserInputService")
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local Workspace = game:GetService("Workspace")
+
+local function onKeyPress(input, gameProcessed)
+    if gameProcessed then return end
+    if input.KeyCode == Enum.KeyCode.E then
+        local ball = Workspace:WaitForChild("BallsInPlay"):WaitForChild("Ball")
+        local args = {
+            ball,
+            0.5,
+            false
+        }
+        ReplicatedStorage:WaitForChild("Events"):WaitForChild("Slide"):FireServer(unpack(args))
+    end
+end
+
+UserInputService.InputBegan:Connect(onKeyPress)
